@@ -31,7 +31,6 @@ const EsewaSuccess = () => {
 
         })
         .catch((error) => {
-            // console.log(error);
 
         });
     };

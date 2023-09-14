@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Models\Event;
+use App\Models\PhoneNumberVerification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,11 +34,11 @@ class BookingController extends Controller
 
         // Check if the phoneNumber exists and has a valid verificationStatus
         $phoneNumber = $data['phoneNumber'];
-        $verificationRecord = DB::table('phone_number_verifications')
-            ->where('phoneNumber', $phoneNumber)
+        $verificationRecord = PhoneNumberVerification::where('phoneNumber', $phoneNumber)
             ->where('verificationStatus', true)
-            ->where('expires_at', '>=', now()) // Check if expires_at is not more than 3 minutes in the future
-            ->first();
+            ->where('expires_at', '>', Carbon::now())
+            ->latest()
+            ->firstOrFail();
 
         if (!$verificationRecord) {
             return response()->json(['error' => 'Phone number not verified, does not exist, or verification has expired.'], 400);

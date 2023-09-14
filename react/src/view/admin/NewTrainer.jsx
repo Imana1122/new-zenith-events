@@ -69,10 +69,6 @@ export const NewTrainer = () => {
   };
 
   useEffect(() => {
-    console.log(trainer);
-  });
-
-  useEffect(() => {
     setErrors({});
   }, [trainer.imagePath]);
 
@@ -83,7 +79,6 @@ export const NewTrainer = () => {
     // Determine the request URL and method based on the mode (update or create)
     const requestUrl = trainerId ? `/updateTrainer/${trainerId}` : "/createTrainer";
     const requestMethod = "POST";
-    console.log(requestMethod, requestUrl);
 
     axiosClient
       .request({
@@ -101,10 +96,8 @@ export const NewTrainer = () => {
       .catch((error) => {
         // Handle the error
         if (error.response && error.response.data && error.response.data.errors) {
-          console.log(error);
           setErrors(error.response.data.errors);
-        } else {
-          console.log(error);
+
         }
       });
   };

@@ -52,7 +52,6 @@ export default function UpdateProfileInformation({ fullName, userPhoneNumber, cl
       })
       .catch((error) => {
         setProcessing(false);
-        // console.log(error);
         setErrors(error.response.data.errors);
       });
   };

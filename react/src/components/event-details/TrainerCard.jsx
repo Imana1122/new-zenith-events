@@ -22,6 +22,8 @@ const TrainerCard = ({ trainer }) => {
         <Typography  variant={isMdScreen ? 'subtitle1' : 'subtitle3'}>{trainer.post}</Typography>
         <Typography variant="body2">{trainer.skillLevel}</Typography>
         <Typography variant="body2">{trainer.experienceYears} years of experience</Typography>
+        <div>
+    </div>
       </Box>
     </Paper>
   );

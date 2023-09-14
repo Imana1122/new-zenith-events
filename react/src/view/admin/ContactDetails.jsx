@@ -24,12 +24,10 @@ export const ContactDetails = () => {
   const getContacts = () => {
       axiosClient.get('/get-contact-details')
         .then((response) => {
-        //   console.log(response);
           setContactDetails(response.data.contact);
 
         })
         .catch((error) => {
-        //   console.log(error);
         });
 
   }

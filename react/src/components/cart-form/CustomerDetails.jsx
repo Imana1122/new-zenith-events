@@ -149,7 +149,6 @@ const handleVerificationCodeChange = (event) => {
           setPhoneVerifyError(error.response.data.error);
           setTimer();
           recentlySuccessfulModal();
-        //   console.log(error)
         } else {
           // Handle other errors, such as network errors
 
@@ -178,7 +177,7 @@ const handleVerificationCodeChange = (event) => {
             { headers: { 'Content-Type': 'application/json' } }
           )
           .then((response) => {
-            if (response.data.message === 'true') {
+            if (response.data.message === 'Booking successful') {
               try {
                 navigate('/esewa', {
                   state: {
@@ -188,12 +187,10 @@ const handleVerificationCodeChange = (event) => {
                   },
                 });
               } catch (error) {
-                // console.log(error)
               }
             }
           })
           .catch((error) => {
-        //    console.log(error)
            setBookingError(error.response.data.errors)
            recentlySuccessfulModal()
           });
@@ -226,8 +223,12 @@ const handleVerificationCodeChange = (event) => {
 
         })
         .catch((error) => {
-            // console.log(error)
-            setCodeSentError(error.response.data.errors)
+            if(error.response.data.errors){
+                setCodeSentError(error.response.data.errors)
+            }
+            if(error.response.data.error){
+                setCodeVerifyError(error.response.data.error)
+            }
             recentlySuccessfulModal()
         });
     };

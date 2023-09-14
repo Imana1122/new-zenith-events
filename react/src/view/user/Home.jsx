@@ -38,7 +38,6 @@ function Home() {
 
   // Update limitedEvents when eventsState changes to show only the first five events
   useEffect(() => {
-    console.log(eventsState)
     setLimitedEvents(eventsState.slice(0, 5));
   }, [eventsState]);
 
@@ -73,7 +72,7 @@ function Home() {
 
         })
         .catch((error) => {
-        //   console.log(error);
+
         });
 
   }

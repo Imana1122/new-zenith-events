@@ -26,12 +26,10 @@ export const Trainers = () => {
       axiosClient
         .get('/search/trainers', { params: { query: searchQuery } })
         .then((response) => {
-        //   console.log(response);
           // Update the 'trainers' state with the search results
           setTrainers(response.data);
         })
         .catch((error) => {
-        //   console.log(error);
         });
     } else {
       axiosClient

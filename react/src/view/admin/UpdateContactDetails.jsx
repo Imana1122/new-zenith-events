@@ -61,10 +61,7 @@ export const UpdateContactDetails = () => {
       .catch((error) => {
         // Handle the error
         if (error.response && error.response.data && error.response.data.errors) {
-        //   console.log(error);
           setErrors(error.response.data.errors);
-        } else {
-        //   console.log(error);
         }
       });
   };
@@ -84,11 +81,6 @@ export const UpdateContactDetails = () => {
       allow_send_message: !prev.allow_send_message,
     }));
   };
-
-  useEffect(()=>{
-  console.log(contactDetails)
-  },[contactDetails])
-
 
 
   return (

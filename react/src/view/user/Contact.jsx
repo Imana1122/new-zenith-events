@@ -52,7 +52,7 @@ export default function Contact() {
         setContact(response.data.contactupdate);
       })
       .catch((error) => {
-        console.log(error);
+
       });
   }, []);
 

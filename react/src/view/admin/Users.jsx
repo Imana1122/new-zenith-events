@@ -25,12 +25,10 @@ export const Users = () => {
       axiosClient
         .get('/search/users', { params: { query: searchQuery } })
         .then((response) => {
-        //   console.log(response);
           // Update the 'users' state with the search results
           setUsers(response.data);
         })
         .catch((error) => {
-        //   console.log(error);
         });
     } else {
       axiosClient

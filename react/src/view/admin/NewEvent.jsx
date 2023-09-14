@@ -141,8 +141,6 @@ const NewEvent = () => {
         // Handle the error
         if (error.response && error.response.data && error.response.data.errors) {
           setErrors(error.response.data.errors);
-        } else {
-          //   console.log(error);
         }
       });
   };

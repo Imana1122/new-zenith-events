@@ -41,11 +41,9 @@ export default function DeleteUserForm({ className = '' }) {
                 // On successful deletion, reset currentUser and userToken
                 setCurrentUser({});
                 setUserToken(null);
-                console.log(currentUser, userToken);
             })
             .catch((error) => {
                 // If there is an error during deletion, display the error message
-                // console.log(error);
                 setErrors(error.response.data.error);
                 setProcessing(false);
             });

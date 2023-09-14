@@ -24,12 +24,10 @@ export const ApplicationImages = () => {
   const getImages = () => {
       axiosClient.get('/get-application-details')
         .then((response) => {
-          console.log(response);
           setApplicationImages(response.data.application_details);
 
         })
         .catch((error) => {
-          console.log(error);
         });
 
   }

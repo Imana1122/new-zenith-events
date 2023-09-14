@@ -25,7 +25,6 @@ export const UserBookings = () => {
         setUserBookings(response.data);
       })
       .catch((error) => {
-        // console.log(error);
       });
   };
 
@@ -42,7 +41,6 @@ export const UserBookings = () => {
         }
       })
       .catch((error) => {
-        // console.log(error);
       });
   };
 

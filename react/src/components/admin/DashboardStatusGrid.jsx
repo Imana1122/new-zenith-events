@@ -18,7 +18,6 @@ export const DashboardStatusGrid = () => {
     axiosClient
       .get('/getDashboardDetails') // Replace with the correct API endpoint
       .then((response) => {
-        console.log(response)
         setTotalBookings(response.data.bookings)
         setThisMonthBookings(response.data.thisMonthBookings)
         setTotalUsers(response.data.users)

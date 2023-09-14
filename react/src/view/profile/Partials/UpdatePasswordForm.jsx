@@ -51,7 +51,6 @@ export default function UpdatePasswordForm({ className = '' }) {
                 setError(response.data.error);
             }
         }).catch((error) => {
-            // console.log(error);
             setErrors(error.response.data.errors);
         }).finally(() => {
             setProcessing(false);

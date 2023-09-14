@@ -29,19 +29,16 @@ export const Events = () => {
     if (searchQuery) {
       axiosClient.get('/search/events', { params: { query: searchQuery } })
         .then((response) => {
-        //   console.log(response);
           // Update the 'events' state with the search results
           setEvents(response.data);
 
         })
         .catch((error) => {
-        //   console.log(error);
         });
     } else {
       axiosClient
         .get("/allEvents")
         .then((response) => {
-        //   console.log(response);
           setEvents(response.data);
         })
         .catch((error) => {
@@ -214,7 +211,7 @@ export const Events = () => {
                 ))}
               </Tab.Panels>
             </Tab.Group>
-            
+
             {/* Modal for delete confirmation */}
             <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <div className="p-4">

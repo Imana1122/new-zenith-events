@@ -22,12 +22,10 @@ const RecentBookings = () => {
         if (searchQuery) {
         axiosClient.get('/search/bookings',{ params: { query: searchQuery } })
             .then((response) => {
-            //   console.log(response);
             // Update the 'data' state with the search results
             setBookings(response.data);
             })
             .catch((error) => {
-            //   console.log(error);
             });
         }else{
             axiosClient
