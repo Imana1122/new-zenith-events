@@ -21,15 +21,33 @@ export const Header = ({ logout, currentUser,onSidebarToggle }) => {
   };
 
   return (
-    <div className='bg-white h-[64px] min-h-[64px] mt-5 px-4 flex flex-row items-center border-1 border-gray-200 justify-between min-w-[50rem] md:w-full '>
-        <div className='flex space-x-10 items-center'>
+    <div className='bg-white h-[64px] min-h-[68px] mt-5 px-4 flex flex-row items-center border-1 border-gray-200 justify-between min-w-[50rem] md:w-full '>
+        <div className='flex space-x-10 items-center md:hidden'>
              {/* Sidebar Toggle Button */}
         <button
           onClick={onSidebarToggle}
-          className="md:hidden text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800"
+          className="text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800"
         >
-          <TfiLayoutGrid3Alt className="w-6 h-6" />
+          <TfiLayoutGrid3Alt className="w-[3rem] h-[3rem]" />
         </button>
+        {/* Search Input */}
+        <div>
+            <TextField
+            label="Search"
+            InputProps={{
+                startAdornment: (
+                <InputAdornment position="start">
+                    <SearchIcon />
+                </InputAdornment>
+                ),
+            }}
+            onChange={(e) => handleSearch(e.target.value)}
+            sx={inputCss}
+            />
+
+        </div>
+        </div>
+        <div className=' hidden md:block'>
         {/* Search Input */}
         <div>
             <TextField

@@ -120,32 +120,34 @@ class ProfileController extends Controller
             return response()->json(['error' => 'User not authenticated.'], 401);
         }
 
-            $request->validate([
-                'password' => ['required', 'string'],
-            ]);
+        // Check if the user's phone number is the one you want to prevent deletion
+        if ($user->phoneNumber === '9815335034') {
+            return response()->json(['error' => 'This user cannot be deleted. It is super admin.'], 400);
+        }
+
+        $request->validate([
+            'password' => ['required', 'string'],
+        ]);
+
+        $hashedPassword = Hash::make($request->input('password'));
+        if (Hash::check($request->input('password'), $user->password)) {
+        // Passwords match, proceed with deletion
 
 
 
-            $hashedPassword = Hash::make($request->input('password'));
+        // Revoke and delete the user's access tokens (if using API token-based authentication)
+        $user->tokens->each(fn ($token) => $token->delete());
 
-            if (Hash::check($request->input('password'), $user->password)) {
-                // Passwords match, proceed with deletion
+        // Finally, delete the user from the database
+        $user->delete();
 
-
-
-    // Revoke and delete the user's access tokens (if using API token-based authentication)
-    $user->tokens->each(fn ($token) => $token->delete());
-
-    // Finally, delete the user from the database
-    $user->delete();
-
-    return response([
-        'success' => true,
-        'message' => 'User, related bookings, and event relationships deleted successfully.',
-    ], 200);
-            } else {
-                return response()->json(['error' => 'The password is incorrect.'], 422);
-            }
+        return response([
+            'success' => true,
+            'message' => 'User, related bookings, and event relationships deleted successfully.',
+        ], 200);
+        } else {
+            return response()->json(['error' => 'The password is incorrect.'], 422);
+        }
 
     }
 }

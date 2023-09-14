@@ -79,16 +79,33 @@ class AuthController extends Controller
 
 
     public function signup(SignupRequest $request)
-   {
+{
     $data = $request->validated();
+
+    // Check if the phone number is verified in phone_number_verifications
+    $verification = DB::table('phone_number_verifications')
+        ->where('phoneNumber', $data['phoneNumber'])
+        ->where('verificationStatus', true)
+        ->where('expires_at', '>', Carbon::now())
+        ->latest()
+        ->first();
+
+    if (!$verification) {
+        return response([
+            'error' => 'Phone number verification failed.'
+        ], 422);
+    }
 
     /** @var \App\Models\User $user */
     $user = User::create([
         'name' => $data['name'],
-        'phoneNumber'=>$data['phoneNumber'],
+        'phoneNumber' => $data['phoneNumber'],
         'password' => bcrypt($data['password'])
     ]);
 
+    // Set verificationStatus to false after successful signup
+    $verification->update(['verificationStatus' => false]);
+
     $token = $user->createToken('main')->plainTextToken;
     return response([
         'user' => [
@@ -98,21 +115,39 @@ class AuthController extends Controller
         ],
         'token' => $token
     ]);
-   }
+}
 
-   public function login(LoginRequest $request)
-   {
-    $credentials =$request->validated();
+public function login(LoginRequest $request)
+{
+    $credentials = $request->validated();
     $remember = $credentials['remember'] ?? false;
     unset($credentials['remember']);
 
-    if (!Auth::attempt($credentials, $remember)){
+    // Check if the phone number is verified in phone_number_verifications
+    $verification = DB::table('phone_number_verifications')
+        ->where('phoneNumber', $credentials['phoneNumber'])
+        ->where('verificationStatus', true)
+        ->where('expires_at', '>', Carbon::now())
+        ->latest()
+        ->first();
+
+    if (!$verification) {
         return response([
-            'error' => 'The Provided credentials are not correct'
+            'error' => 'Phone number verification failed.'
         ], 422);
     }
+
+    if (!Auth::attempt($credentials, $remember)) {
+        return response([
+            'error' => 'The provided credentials are not correct.'
+        ], 422);
+    }
+
     $user = Auth::user();
     $token = $user->createToken('main')->plainTextToken;
+
+    // Set verificationStatus to false after successful login
+    $verification->update(['verificationStatus' => false]);
 
     return response([
         'user' => [
@@ -122,7 +157,7 @@ class AuthController extends Controller
         ],
         'token' => $token
     ]);
-   }
+}
 
    public function logout(Request $request)
    {

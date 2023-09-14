@@ -6,7 +6,6 @@ use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\EventTrainer;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +13,9 @@ class EventController extends Controller
 {
     public function createEvent(EventRequest $request)
 {
+
     $data = $request->validated();
+
 
     // Check if an image was uploaded
     if ($request->hasFile('image')) {
@@ -58,7 +59,7 @@ class EventController extends Controller
         ]);
     }
 
-    return response()->json(['message' => 'Event saved successfully']);
+    return response()->json(['message' => 'Event saved successfully', 'event'=> $event]);
 }
 
 
@@ -95,21 +96,26 @@ public function getAllEvents()
         'Ongoing' => $ongoingEvents,
         'Upcoming' => $upcomingEvents,
     ]);
-}
-
-
+    }
 
     public function getEvents()
     {
         $today = Carbon::now('Asia/Kathmandu');
 
-        $events = Event::with('trainers')->get();
+        $events = Event::with(['trainers'])
+            ->withCount([
+                'bookings as esewa_bookings_count' => function ($query) {
+                    $query->where('esewa_status', true);
+                }
+            ])
+            ->orderByDesc('esewa_bookings_count')
+            ->get();
 
         $allEvents = $events->filter(function ($event) use ($today) {
             return Carbon::parse($event->end_date, 'Asia/Kathmandu')->greaterThan($today);
         });
 
-        return response()->json(['events' => $allEvents]);
+        return response()->json(['events' => $allEvents->values()->all()]);
     }
 
 
@@ -180,26 +186,37 @@ public function getAllEvents()
 
 public function deleteEvent($id)
 {
-    // Find and delete the event from the events table
+    // Find the event from the events table
     $event = Event::findOrFail($id);
 
-    // Get the imagePath of the trainer
+    // Check if there are any bookings associated with this event
+    $hasBookingsWithTrueEsewaStatus = $event->bookings()->where('esewa_status', true)->exists();
+
+    if ($hasBookingsWithTrueEsewaStatus) {
+        return response()->json([
+            'error' => 'Event cannot be deleted because there are bookings with true esewa_status.',
+        ], 400); // You can use a different HTTP status code as appropriate
+    }
+
+    // Get the imagePath of the event
     $imagePath = $event->imagePath;
 
-     // Check if the imagePath exists and delete the image file
-     if ($imagePath && Storage::exists('public/images/events/' .$imagePath)) {
+    // Check if the imagePath exists and delete the image file
+    if ($imagePath && Storage::exists('public/images/events/' . $imagePath)) {
         Storage::delete('public/images/events/' . $imagePath);
     }
 
+    // Delete the event
     $event->delete();
 
     // Delete records from the events_trainers table where event_id matches $id
     DB::table('events_trainers')->where('event_id', $id)->delete();
 
     return response()->json([
-        'message' => 'Event and related trainers deleted successfully.',
+        'message' => 'Event deleted successfully.',
     ]);
 }
+
 
 
 

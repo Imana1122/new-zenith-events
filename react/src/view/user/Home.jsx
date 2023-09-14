@@ -24,8 +24,9 @@ function Home() {
 
   // Fetch events from the server when the component mounts
   useEffect(() => {
+
     axiosClient
-      .get('/events') // Replace with the correct API endpoint
+      .get('/events')
       .then((response) => {
         // Dispatch the setEvents action with the fetched events data
         dispatch(setEvents(response.data.events));
@@ -37,6 +38,7 @@ function Home() {
 
   // Update limitedEvents when eventsState changes to show only the first five events
   useEffect(() => {
+    console.log(eventsState)
     setLimitedEvents(eventsState.slice(0, 5));
   }, [eventsState]);
 
@@ -82,7 +84,7 @@ function Home() {
       <div className="hidden md:grid">
         <div className="border border-black">
           <img
-            className="bg-cover bg-center w-full"
+            className="bg-cover bg-center w-full h-[400px]"
             src={API_BASE_URL + '/storage/images/application/'+backgroundImage}/>
 
 

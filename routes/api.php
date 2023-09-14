@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // BookingController routes
     Route::get('/bookings', 'App\Http\Controllers\BookingController@getAllBookings');
-    Route::delete('/deleteBooking', 'App\Http\Controllers\BookingController@deleteBooking');
+    Route::delete('/deleteBooking/{id}', 'App\Http\Controllers\BookingController@deleteBooking');
     Route::get('/getMostBookedEvents', 'App\Http\Controllers\BookingController@getMostBookedEvents');
 
 
@@ -39,15 +39,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/trainers/{trainerId}', 'App\Http\Controllers\TrainerController@getTrainerById');
 
     // EventController routes
-    Route::post('/createEvent', 'App\Http\Controllers\EventController@createEvent');
+
     Route::get('/allEvents', 'App\Http\Controllers\EventController@getAllEvents');
     Route::get('/events/{eventId}', 'App\Http\Controllers\EventController@getEventById');
-    Route::post('/updateEvent/{id}', 'App\Http\Controllers\EventController@updateEvent');
-    Route::delete('/deleteEvent/{id}', 'App\Http\Controllers\EventController@deleteEvent');
-    Route::get('/getUserEvents', 'App\Http\Controllers\EventController@getUserEvents');
 
-    // EventTrainerController routes
-    Route::post('/saveSelectedTrainers', 'App\Http\Controllers\EventTrainerController@saveSelectedTrainers');
+    Route::delete('/deleteEvent/{id}', 'App\Http\Controllers\EventController@deleteEvent');
+
 
     // SearchController routes
     Route::get('/search/events', 'App\Http\Controllers\SearchController@searchEvents');
@@ -74,6 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:Super Admin'])->group(function () {
     //UserController
     Route::delete('/deleteUser/{id}', 'App\Http\Controllers\UserController@removeUser');
+
     // AuthController routes
     Route::post('/signupDataVerification', 'App\Http\Controllers\AuthController@signupDataVerification');
     Route::post('/signupPhoneNumberVerification', 'App\Http\Controllers\AuthController@signupPhoneNumberVerification');
@@ -85,6 +83,9 @@ Route::middleware(['auth:sanctum', 'role:Admin'])->group(function () {
     Route::delete('/deleteUser', 'App\Http\Controllers\ProfileController@destroy');
 
 });
+Route::post('/createEvent', 'App\Http\Controllers\EventController@createEvent');
+
+Route::post('/updateEvent/{id}', 'App\Http\Controllers\EventController@updateEvent');
 
 // AuthController routes
 Route::post('/loginDataVerification', 'App\Http\Controllers\AuthController@loginDataVerification');
@@ -103,7 +104,6 @@ Route::get('/events', 'App\Http\Controllers\EventController@getEvents');
 
 //BookingController
 Route::post('/createBooking', 'App\Http\Controllers\BookingController@store');
-Route::post('/booking', 'App\Http\Controllers\BookingController@store');
 
 //EsewaController
 Route::post('/esewa-payment', 'App\Http\Controllers\EsewaController@esewaPayment');
@@ -114,6 +114,5 @@ Route::get('/get-contact-details', 'App\Http\Controllers\ContactDetailsControlle
 //ApplicationDetailsController routes
 Route::get('/get-application-details', 'App\Http\Controllers\ApplicationDetailsController@getApplicationDetails');
 
-//VATController routes
-Route::get('/get-vat', 'App\Http\Controllers\VATController@get');
+
 

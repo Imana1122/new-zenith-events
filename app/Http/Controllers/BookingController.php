@@ -25,34 +25,45 @@ class BookingController extends Controller
         $vat = $event->vat;
 
         // Calculate the total amount based on event price and noOfPeople
-        $totalAmount = $event->price * $data['noOfPeople']+$event->price * $data['noOfPeople']* $vat/100 ;
+        $totalAmount = $event->price * $data['noOfPeople'] + $event->price * $data['noOfPeople'] * $vat / 100;
 
         // Convert totalAmount to an integer (assuming it's in decimal format, you can adjust as needed)
         $totalAmount = (int) $totalAmount;
         $data['totalAmount'] = (int) $data['totalAmount'];
 
+        // Check if the phoneNumber exists and has a valid verificationStatus
+        $phoneNumber = $data['phoneNumber'];
+        $verificationRecord = DB::table('phone_number_verifications')
+            ->where('phoneNumber', $phoneNumber)
+            ->where('verificationStatus', true)
+            ->where('expires_at', '>=', now()) // Check if expires_at is not more than 3 minutes in the future
+            ->first();
+
+        if (!$verificationRecord) {
+            return response()->json(['error' => 'Phone number not verified, does not exist, or verification has expired.'], 400);
+        }
+
         if ($totalAmount === $data['totalAmount']) {
             Booking::create([
                 'name' => $data['name'],
-                'address'  => $data['address'],
-                'eventId'  => $data['eventId'],
-                'noOfPeople'  => $data['noOfPeople'],
-                'totalAmount'  => $totalAmount, // Use the calculated totalAmount
-                'phoneNumber'  => $data['phoneNumber'],
-                'verificationStatus'  => true,
-                'esewa_status'  => 'uncertain',
+                'address' => $data['address'],
+                'eventId' => $data['eventId'],
+                'noOfPeople' => $data['noOfPeople'],
+                'totalAmount' => $totalAmount, // Use the calculated totalAmount
+                'phoneNumber' => $phoneNumber,
+                'verificationStatus' => true,
+                'esewa_status' => 'uncertain',
                 'bookOrderId' => $data['bookOrderId']
             ]);
+            // Set verificationStatus to false after successful login
+            $verificationRecord->update(['verificationStatus' => false]);
 
             // Optionally, you can return a success response or perform additional actions
-            return response()->json(['message' => 'true']);
+            return response()->json(['message' => 'Booking successful']);
         } else {
             return response()->json(['error' => 'No further booking can be done.'], 400);
         }
     }
-
-
-
 
     public function getAllBookings()
     {
@@ -60,6 +71,12 @@ class BookingController extends Controller
 
         $bookings = Booking::with('event')
         ->where('esewa_status', true)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        $failedBookings = Booking::with('event')
+        ->where('esewa_status', false)
+        ->orderBy('created_at', 'DESC')
         ->get();
 
         $now = Carbon::now('Asia/Kathmandu');
@@ -88,18 +105,8 @@ class BookingController extends Controller
             'All' =>$bookings,
             'Upcoming' => $upcomingBookings,
             'Ongoing' => $ongoingBookings,
-            'Finished' => $finishedBookings
-        ]);
-    }
-
-
-    public function deleteBooking($id)
-    {
-        $booking = Booking::findOrFail($id);
-        $booking->delete();
-
-        return response()->json([
-            'message' => 'Booking deleted successfully.',
+            'Finished' => $finishedBookings,
+            'Failed'=> $failedBookings
         ]);
     }
 
@@ -173,6 +180,22 @@ class BookingController extends Controller
     }
 
 
+    public function deleteBooking($id)
+    {
+        $booking = Booking::findOrFail($id);
 
+        // Check if esewa_status is true, and if it is, return an error response
+        if ($booking->esewa_status) {
+            return response()->json([
+                'error' => 'Cannot delete a booking with esewa_status true.',
+            ], 422); // You can choose an appropriate HTTP status code
+        }
+
+        $booking->delete();
+
+        return response()->json([
+            'message' => 'Booking deleted successfully.',
+        ]);
+    }
 
 }

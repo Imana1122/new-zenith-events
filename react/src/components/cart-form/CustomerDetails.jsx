@@ -239,6 +239,9 @@ const handleVerificationCodeChange = (event) => {
           <h2 className="text-2xl mb-4 text-purple-900 text-center">Enter Your Details</h2>
           <hr className="border-purple-900 md:my-2 mb-4" />
           <form className="flex flex-col mt-3" onSubmit={booking}>
+          <div className="md:hidden flex justify-between items-start mb-4">
+              <p>Total Payable</p> <p> NRs{total}</p>
+            </div>
             {isMobileVerified && isCodeVerified ? (
               <>
                 <div className="flex flex-col items-end w-full space-y-3">
@@ -382,11 +385,6 @@ const handleVerificationCodeChange = (event) => {
                 </>
               )
             )}
-
-            <div className="md:hidden flex justify-between items-start mt-4">
-              <p>Total Payable</p> <p> NRs{total}</p>
-            </div>
-
           </form>
         </div>
       );

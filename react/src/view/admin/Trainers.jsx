@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Modal from "../../components/core/Modal";
 import { CiWarning } from "react-icons/ci";
 import API_BASE_URL from "../../apiConfig";
+import toast from "react-hot-toast";
 
 export const Trainers = () => {
   const { searchQuery } = useStateContext();
@@ -52,7 +53,10 @@ export const Trainers = () => {
         setIsModalOpen(false);
       })
       .catch((error) => {
-        console.error(error);
+        setIsModalOpen(false);
+        if(error.response.data.error){
+            toast.error(error.response.data.error);
+        }
       });
   };
 

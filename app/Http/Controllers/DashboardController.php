@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function getDashboardDetails(Request $request)
 {
     // Get all users
-    $users = User::all();
+    $users = User::all()->count();
 
     // Get the current month and year
     $currentMonth = Carbon::now('Asia/Kathmandu')->format('m');
@@ -26,7 +26,7 @@ class DashboardController extends Controller
     // Get users created within the current month and year
     $thisMonthUsers = User::whereMonth('created_at', '=', $currentMonth)
         ->whereYear('created_at', '=', $currentYear)
-        ->get();
+        ->count();
 
     $totalMonthlyRevenue = DB::table('bookings')
         ->selectRaw('SUM(totalAmount) AS revenue')
@@ -44,18 +44,18 @@ class DashboardController extends Controller
     // Use the query builder for bookings and events
     $bookings = Booking::where('esewa_status', true)
         ->whereMonth('created_at', '=', $currentMonth)
-        ->get();
+        ->count();
 
     $thisMonthBookings = Booking::with('event')
         ->where('esewa_status', true)
         ->whereMonth('created_at', '=', $currentMonth)
-        ->get();
+        ->count();
 
-    $events = Event::all();
+    $events = Event::all()->count();
 
     // Use the query builder for thisMonthEvents
     $thisMonthEvents = Event::whereMonth('created_at', '=', $currentMonth)
-        ->get();
+        ->count();
 
     return response()->json([
         'users' => $users,

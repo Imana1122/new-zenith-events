@@ -13,6 +13,7 @@ import { CiWarning } from "react-icons/ci";
 import API_BASE_URL from "../../apiConfig";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import toast from "react-hot-toast";
 
 export const Events = () => {
   const { searchQuery } = useStateContext();
@@ -59,7 +60,10 @@ export const Events = () => {
         setIsModalOpen(false);
       })
       .catch((error) => {
-        console.error(error);
+        setIsModalOpen(false);
+        if(error.response.data.error){
+            toast.error(error.response.data.error);
+        }
       });
   };
 
@@ -210,6 +214,7 @@ export const Events = () => {
                 ))}
               </Tab.Panels>
             </Tab.Group>
+            
             {/* Modal for delete confirmation */}
             <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <div className="p-4">

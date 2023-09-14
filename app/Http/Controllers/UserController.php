@@ -22,51 +22,30 @@ class UserController extends Controller
 
 
 
-    public function destroyUser(Request $request, $id)
-    {
-        try {
-            // Find the user by ID
-            $user = User::findOrFail($id);
 
-            // Verify the provided password
-            $providedPassword = $request->input('password');
-            if (!Hash::check($providedPassword, $user->password)) {
-                // Password does not match, return an error response
-                return response()->json(['error' => 'Incorrect password.'], 401);
-            }
 
-            // Perform the delete operation
-            $user->delete();
+public function removeUser(Request $request, $id)
+{
+    try {
+        // Find the user by ID
+        $user = User::findOrFail($id);
 
-            // Return a success response or redirect
-            return response()->json(['success' => 'User deleted successfully.']);
-            // OR
-            // return redirect()->route('users.index')->with('success', 'User deleted successfully.');
-        } catch (\Exception $e) {
-            // Handle any exceptions that may occur during the deletion process
-            return response()->json(['error' => 'Failed to delete user.'], 500);
-            // OR
-            // return redirect()->route('users.index')->with('error', 'Failed to delete user.');
+        // Check if the user's phone number is the one you want to prevent deletion
+        if ($user->phoneNumber === '9815335034') {
+            return response()->json(['error' => 'This user cannot be deleted. It is super admin'], 400);
         }
+
+        // Perform the delete operation
+        $user->delete();
+
+        // Return a success response or redirect
+        return response()->json(['success' => 'User deleted successfully.']);
+    } catch (\Exception $e) {
+        // Handle any exceptions that may occur during the deletion process
+        return response()->json(['error' => 'Failed to delete user.'], 500);
     }
+}
 
-    public function removeUser(Request $request, $id)
-    {
-        try {
-            // Find the user by ID
-            $user = User::findOrFail($id);
-
-
-            // Perform the delete operation
-            $user->delete();
-
-            // Return a success response or redirect
-            return response()->json(['success' => 'User deleted successfully.']);
-        } catch (\Exception $e) {
-            // Handle any exceptions that may occur during the deletion process
-            return response()->json(['error' => 'Failed to delete user.'], 500);
-        }
-    }
 
 
 }

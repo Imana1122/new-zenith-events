@@ -3,14 +3,14 @@ import { IoAlbums, IoBagHandle, IoCash, IoCashOutline, IoPeople, IoPeopleOutline
 import axiosClient from '../../axios';
 
 export const DashboardStatusGrid = () => {
-  const [totalBookings, setTotalBookings] = useState([]);
-  const [thisMonthBookings, setThisMonthBookings] = useState([]);
+  const [totalBookings, setTotalBookings] = useState('');
+  const [thisMonthBookings, setThisMonthBookings] = useState('');
   const [thisMonthRevenue, setThisMonthRevenue] = useState('');
   const [totalRevenue, setTotalRevenue] = useState('');
-  const [totalUsers, setTotalUsers] = useState([]);
-  const [thisMonthUsers, setThisMonthUsers] = useState([]);
-  const [totalEvents, setTotalEvents] = useState([]);
-  const [thisMonthEvents, setThisMonthEvents] = useState([]);
+  const [totalUsers, setTotalUsers] = useState('');
+  const [thisMonthUsers, setThisMonthUsers] = useState('');
+  const [totalEvents, setTotalEvents] = useState('');
+  const [thisMonthEvents, setThisMonthEvents] = useState('');
 
 
   // Fetch data for total and this month's revenue
@@ -31,7 +31,7 @@ export const DashboardStatusGrid = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, '');
 
 
   return (
@@ -55,8 +55,8 @@ export const DashboardStatusGrid = () => {
         <div>
           <span className='text-sm text-gray-500 font-light'>Monthly Revenue</span>
           <div className='flex items-center xl:flex-row flex-col'>
-            <strong className='text-md text-gray-700 font-semibold'>{totalRevenue}</strong>
-            <span className='text-sm text-green-500 pl-2'>+{thisMonthRevenue}</span>
+            <strong className='text-md text-gray-700 font-semibold'>Rs.{totalRevenue}</strong>
+            <span className='text-sm text-green-500 pl-2'>+Rs.{thisMonthRevenue}</span>
           </div>
         </div>
       </BoxWrapper>
@@ -67,8 +67,8 @@ export const DashboardStatusGrid = () => {
         <div>
           <span className='text-sm text-gray-500 font-light'>Total Bookings</span>
           <div className='flex items-center xl:flex-row flex-col'>
-            <strong className='text-md text-gray-700 font-semibold'>{totalBookings.length}</strong>
-            <span className='text-sm text-green-500 pl-2'>+{thisMonthBookings.length}</span>
+            <strong className='text-md text-gray-700 font-semibold'>{totalBookings}</strong>
+            <span className='text-sm text-green-500 pl-2'>+{thisMonthBookings}</span>
           </div>
         </div>
       </BoxWrapper>
@@ -79,8 +79,8 @@ export const DashboardStatusGrid = () => {
         <div>
           <span className='text-sm text-gray-500 font-light'>Total Events</span>
           <div className='flex items-center xl:flex-row flex-col'>
-            <strong className='text-md text-gray-700 font-semibold'>{totalEvents.length}</strong>
-            <span className='text-sm text-green-500 pl-2'>+{thisMonthEvents.length}</span>
+            <strong className='text-md text-gray-700 font-semibold'>{totalEvents}</strong>
+            <span className='text-sm text-green-500 pl-2'>+{thisMonthEvents}</span>
           </div>
         </div>
       </BoxWrapper>
@@ -91,8 +91,8 @@ export const DashboardStatusGrid = () => {
         <div>
           <span className='text-sm text-gray-500 font-light'>Total Users</span>
           <div className='flex items-center xl:flex-row flex-col'>
-            <strong className='text-md text-gray-700 font-semibold'>{totalUsers.length}</strong>
-            <span className='text-sm text-green-500 pl-2'>+{thisMonthUsers.length}</span>
+            <strong className='text-md text-gray-700 font-semibold'>{totalUsers}</strong>
+            <span className='text-sm text-green-500 pl-2'>+{thisMonthUsers}</span>
           </div>
         </div>
       </BoxWrapper>

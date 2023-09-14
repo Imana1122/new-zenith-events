@@ -8,6 +8,7 @@ import { highlightSearchQuery } from "../../utility/HighlightText";
 import Modal from "../../components/core/Modal";
 import { CiWarning } from "react-icons/ci";
 import { superadmin } from "../../superadmin";
+import toast from "react-hot-toast";
 
 export const Users = () => {
   const { searchQuery, currentUser } = useStateContext();
@@ -49,9 +50,13 @@ export const Users = () => {
       .then(() => {
         search();
         setIsModalOpen(false);
+
       })
       .catch((error) => {
-        // console.error(error);
+        setIsModalOpen(false);
+        if(error.response.data.error){
+            toast.error(error.response.data.error);
+        }
       });
   };
 

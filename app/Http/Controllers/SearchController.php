@@ -79,6 +79,7 @@ class SearchController extends Controller
                 where('eventId', 'LIKE', "%$query%")
                 ->orWhere('id', 'LIKE', "%$query%");
         })
+        ->orderBy('created_at', 'DESC')
         ->get();
 
 

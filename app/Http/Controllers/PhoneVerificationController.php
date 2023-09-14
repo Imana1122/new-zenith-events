@@ -61,44 +61,41 @@ class PhoneVerificationController extends Controller
     }
 
     public function verifyPhoneNumber(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'phoneNumber' => ['required', 'numeric'],
-        'verificationCode' => ['required', 'numeric'],
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'phoneNumber' => ['required', 'numeric'],
+            'verificationCode' => ['required', 'numeric'],
+        ]);
 
-    if ($validator->fails()) {
-        $errors = $validator->errors();
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        $response = [
-            'errors' => $errors->messages(),
-        ];
+        $phoneNumber = $request->input('phoneNumber');
+        $verificationCode = $request->input('verificationCode');
 
-        return response()->json($response, 400);
+        $verificationRecord = DB::table('phone_number_verifications')
+            ->where('phoneNumber', $phoneNumber)
+            ->latest()
+            ->first();
+
+        if (!$verificationRecord || $verificationRecord->expires_at < now()) {
+            return response()->json(['error' => 'Verification code is missing or expired.', 'verificationStatus' => false], 404);
+        }
+
+        $storedVerificationCode = $verificationRecord->verificationCode;
+
+        if (Hash::check($verificationCode, $storedVerificationCode)) {
+            DB::table('phone_number_verifications')
+                ->where('phoneNumber', $phoneNumber)
+                ->where('expires_at', '>=', now())
+                ->update(['verificationStatus' => true]);
+
+            return response()->json(['message' => 'Verification code is successful', 'verificationStatus' => true]);
+        } else {
+            return response()->json(['error' => 'Invalid verification code. Try regenerating again.', 'verificationStatus' => false], 422);
+        }
     }
-
-    $phoneNumber = strval($request->input('phoneNumber'));
-    $verificationCode = $request->input('verificationCode');
-
-    // Retrieve the latest verification record
-    $verificationRecord = DB::table('phone_number_verifications')
-        ->where('phoneNumber', $phoneNumber)
-        ->latest()
-        ->first();
-
-    if (!$verificationRecord || $verificationRecord->expires_at < now()) {
-        return response()->json(['error' => 'Verification code is missing or expired. Try generating code again.', 'verificationStatus' => false]);
-    }
-
-    // Retrieve the verification code from the record
-    $storedVerificationCode = $verificationRecord->verificationCode;
-
-    if (Hash::check($verificationCode, $storedVerificationCode)) {
-        return response()->json(['message' => 'Verification code is successful', 'verificationStatus' => true]);
-    } else {
-        return response()->json(['error' => 'Invalid verification code. Try regenerating again.', 'verificationStatus' => false]);
-    }
-}
 
 public function sendCode(Request $request)
 {

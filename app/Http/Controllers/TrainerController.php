@@ -106,23 +106,32 @@ class TrainerController extends Controller
 
 
     public function deleteTrainer($id)
-{
-    $trainer = Trainer::findOrFail($id);
+    {
+        $trainer = Trainer::findOrFail($id);
 
-    // Get the imagePath of the trainer
-    $imagePath = $trainer->imagePath;
+        // Check if the trainer is associated with any events
+        $associatedEvents = $trainer->events()->count();
 
-    // Check if the imagePath exists and delete the image file
-    if ($imagePath && Storage::exists('public/images/trainers/' .$imagePath)) {
-        Storage::delete('public/images/trainers/' . $imagePath);
+        if ($associatedEvents > 0) {
+            return response()->json([
+                'error' => 'Trainer cannot be deleted because they are associated with events.',
+            ], 400); // You can use a different HTTP status code as appropriate
+        }
+
+        // Get the imagePath of the trainer
+        $imagePath = $trainer->imagePath;
+
+        // Check if the imagePath exists and delete the image file
+        if ($imagePath && Storage::exists('public/images/trainers/' . $imagePath)) {
+            Storage::delete('public/images/trainers/' . $imagePath);
+        }
+
+        // Delete the trainer record from the database
+        $trainer->delete();
+
+        return response()->json([
+            'message' => 'Trainer deleted successfully.',
+        ]);
     }
-
-    // Delete the trainer record from the database
-    $trainer->delete();
-
-    return response()->json([
-        'message' => 'Trainer deleted successfully.',
-    ]);
-}
 
 }

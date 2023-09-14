@@ -87,14 +87,15 @@ const AppRouter = () => {
 };
 
 const RouteApp = () => {
-  return (
-    <ContextProvider>
-      <Router>
-        <AppRouter />
-      </Router>
-      <Toaster />
-    </ContextProvider>
-  );
-};
+    return (
+      <ContextProvider>
+        <Router>
+          <AppRouter />
+        </Router>
+        <Toaster/>
+      </ContextProvider>
+    );
+  };
+
 
 export default RouteApp;
