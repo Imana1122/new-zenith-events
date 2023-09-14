@@ -29,10 +29,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', 'App\Http\Controllers\BookingController@getAllBookings');
     Route::delete('/deleteBooking', 'App\Http\Controllers\BookingController@deleteBooking');
     Route::get('/getMostBookedEvents', 'App\Http\Controllers\BookingController@getMostBookedEvents');
-    Route::get('/getRevenue', 'App\Http\Controllers\BookingController@getRevenue');
-
-    // UserController routes
-
 
 
     // TrainerController routes
@@ -67,7 +63,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/update-application-details', 'App\Http\Controllers\ApplicationDetailsController@update');
     Route::get('/get-application-details', 'App\Http\Controllers\ApplicationDetailsController@getApplicationDetails');
 
+    //UserController
     Route::get('/getUsers', 'App\Http\Controllers\UserController@getUsers');
+
+    //DashboardController
+    Route::get('/getRevenue', 'App\Http\Controllers\DashboardController@getRevenue');
+    Route::get('/getDashboardDetails', 'App\Http\Controllers\DashboardController@getDashboardDetails');
 });
 
 Route::middleware(['auth:sanctum', 'role:Super Admin'])->group(function () {

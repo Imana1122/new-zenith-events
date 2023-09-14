@@ -4,9 +4,8 @@ import React, { Fragment } from 'react';
 import { HiOutlineBell, HiOutlineChatAlt, HiOutlineSearch } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { useStateContext } from '../../contents/ContextProvider';
-import { IoMenuOutline } from 'react-icons/io5';
+import { TfiLayoutGrid3Alt } from 'react-icons/tfi';
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from '@mui/material';
 import { inputCss } from '../css-components/text-field';
@@ -22,30 +21,32 @@ export const Header = ({ logout, currentUser,onSidebarToggle }) => {
   };
 
   return (
-    <div className='bg-white h-[64px] min-h-[64px] mt-5 px-4 flex flex-row justify-between items-center border-1 border-gray-200 space-x-3 '>
-         {/* Sidebar Toggle Button */}
-         <button
+    <div className='bg-white h-[64px] min-h-[64px] mt-5 px-4 flex flex-row items-center border-1 border-gray-200 justify-between min-w-[50rem] md:w-full '>
+        <div className='flex space-x-10 items-center'>
+             {/* Sidebar Toggle Button */}
+        <button
           onClick={onSidebarToggle}
           className="md:hidden text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800"
         >
-          <IoMenuOutline className="w-6 h-6" />
+          <TfiLayoutGrid3Alt className="w-6 h-6" />
         </button>
-      {/* Search Input */}
-      <div>
-      <TextField
-      label="Search"
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-      onChange={(e) => handleSearch(e.target.value)}
-      sx={inputCss}
-    />
+        {/* Search Input */}
+        <div>
+            <TextField
+            label="Search"
+            InputProps={{
+                startAdornment: (
+                <InputAdornment position="start">
+                    <SearchIcon />
+                </InputAdornment>
+                ),
+            }}
+            onChange={(e) => handleSearch(e.target.value)}
+            sx={inputCss}
+            />
 
-      </div>
+        </div>
+        </div>
 
       {/* Icons and Menu */}
       <div className='flex items-center gap-2 mr-2'>

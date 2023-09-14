@@ -69,7 +69,7 @@ export default function Signup() {
   };
 
   return (
-    <PageComponent title="Sign up for an account">
+    <PageComponent title="Add new User">
       <div>
         {error && <div className="mb-4 font-medium text-sm text-red-600">{error}</div>}
         <form onSubmit={onSubmit} className="space-y-6" action="#" method="POST">
@@ -136,8 +136,8 @@ export default function Signup() {
             sx={inputCss}
           />
 
-          <div className="flex justify-center items-center">
-            <PrimaryButton disabled={processing}>{processing ? "Signing up" : "Signup"}</PrimaryButton>
+          <div className="flex items-start">
+            <PrimaryButton disabled={processing}>{processing ? "ADDING" : "ADD"}</PrimaryButton>
           </div>
         </form>
 

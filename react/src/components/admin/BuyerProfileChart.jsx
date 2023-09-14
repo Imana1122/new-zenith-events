@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../axios';
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell, Label } from 'recharts';
 
 const BuyerProfileChart = () => {
   const [orderedEvents, setOrderedEvents] = useState([]);
@@ -28,8 +28,8 @@ const BuyerProfileChart = () => {
         <strong className='text-gray-700 font-medium'>Event Profile</strong>
         <div className='w-full mt-3 flex-1 text-xs'>
           <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
+          <PieChart>
+            <Pie
                 data={orderedEvents}
                 dataKey="booking_count"
                 nameKey="eventId"
@@ -37,15 +37,25 @@ const BuyerProfileChart = () => {
                 cy="50%"
                 outerRadius={80}
                 fill="#8884d8"
-                label
-              >
+                label="Event Id"
+            >
                 {orderedEvents.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getColor(index)} />
+                <Cell key={`cell-${index}`} fill={getColor(index)} />
                 ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
+                {orderedEvents.map((entry, index) => (
+                <Label
+                    key={`label-${index}`}
+                    position="insideBottom"
+                    fill="white" // Label text color
+                    fontSize={12} // Label text size
+                    value={entry.eventId} // Custom label for nameKey
+                />
+                ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+
           </ResponsiveContainer>
         </div>
       </div>

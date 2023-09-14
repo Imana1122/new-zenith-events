@@ -1,11 +1,9 @@
 import React from 'react';
 import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from '../const/navigation';
-import { FcBullish } from 'react-icons/fc';
 import { HiOutlineLogout } from 'react-icons/hi';
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
-import { FaCross, FaDeleteLeft } from 'react-icons/fa6';
-import { FaArrowCircleLeft } from 'react-icons/fa';
+import { TfiArrowCircleLeft } from 'react-icons/tfi';
 import { ApplicationLogo } from '../../core/ApplicationLogo';
 
 const linkClasses = 'flex items-center gap-2 font-light px-3 py-2 hover:bg-neutral-700 hover:no-underline active:bg-neutral-600 rounded-sm text-base';
@@ -14,7 +12,7 @@ export const Sidebar = ({ logout, handleSidebarToggle }) => {
   return (
     <div className='bg-neutral-900 w-60 h-full p-3 flex flex-col text-white'>
 
-            <FaArrowCircleLeft onClick={handleSidebarToggle} className=' text-red-500 absolute right-5 top-2 cursor-pointer md:hidden'/>
+            <TfiArrowCircleLeft onClick={handleSidebarToggle} className=' text-blue-500 text-2xl absolute right-5 top-2 cursor-pointer md:hidden'/>
 
       <div className='flex items-center gap-2 px-2 py-3'>
 
@@ -25,7 +23,7 @@ export const Sidebar = ({ logout, handleSidebarToggle }) => {
           {/* Render sidebar links */}
           {DASHBOARD_SIDEBAR_LINKS.map((item) => {
             return (
-              <SidebarLink key={item.key} item={item} />
+              <SidebarLink key={item.key} item={item} onClick={handleSidebarToggle}/>
             );
           })}
         </div>
@@ -34,7 +32,7 @@ export const Sidebar = ({ logout, handleSidebarToggle }) => {
           {/* Render bottom links */}
           {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map((item) => {
             return (
-              <SidebarLink key={item.key} item={item} />
+              <SidebarLink key={item.key} item={item} onClick={handleSidebarToggle}/>
             );
           })}
           {/* Logout link */}
@@ -48,7 +46,7 @@ export const Sidebar = ({ logout, handleSidebarToggle }) => {
   );
 };
 
-function SidebarLink({ item }) {
+function SidebarLink({ item, onClick }) {
   const { pathname } = useLocation();
 
   return (
@@ -59,6 +57,7 @@ function SidebarLink({ item }) {
         pathname === item.path ? 'text-white bg-neutral-700' : 'text-neutral-400',
         linkClasses
       )}
+      onClick={onClick}
     >
       <span className="text-xl">{item.icon}</span>
       {item.label}

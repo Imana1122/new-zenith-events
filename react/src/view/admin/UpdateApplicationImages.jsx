@@ -93,7 +93,7 @@ export const UpdateApplicationImages = () => {
   };
 
   return (
-    <PageComponent title="Edit Contact Details">
+    <PageComponent title="Edit Application Images">
       <div className="md:mx-10 m-auto">
         <form onSubmit={onSubmit}>
           <Card variant="outlined">

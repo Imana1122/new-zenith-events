@@ -12,7 +12,7 @@ const TransactionChart = () => {
       .get('/getRevenue') // Replace with the correct API endpoint
       .then((response) => {
         setMonthlyRevenue(response.data.monthlyRevenue);
-        setYearlyRevenue(response.data.totalYearlyRevenue);
+        setYearlyRevenue(response.data.yearlyRevenue);
       })
       .catch((error) => {
         console.error(error);
@@ -20,7 +20,7 @@ const TransactionChart = () => {
   }, []);
 
   return (
-    <div className='flex flex-col space-y-10 flex-1'>
+    <div className='flex flex-col space-y-10 flex-1 md:w-full w-[50rem]'>
       {/* Monthly Transaction Chart */}
       <div className='h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col'>
         <strong className='text-gray-700 font-medium'>Monthly Transaction of Current Year</strong>

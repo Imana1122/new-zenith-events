@@ -93,37 +93,6 @@ class BookingController extends Controller
     }
 
 
-
-    public function getRevenue()
-    {
-        $currentYear = date('Y');
-        $monthlyRevenue = DB::table('bookings')
-
-            ->selectRaw('MONTH(created_at) AS month, SUM(totalAmount) AS revenue')
-            ->whereRaw("YEAR(created_at) = ?", [$currentYear])
-            ->where('bookings.esewa_status', true)
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
-
-
-
-
-
-        $totalYearlyRevenue = DB::table('bookings')
-        ->selectRaw('YEAR(created_at) AS year, SUM(totalAmount) AS revenue')
-            ->where('bookings.esewa_status', true)
-            ->groupBy('year')
-            ->get();
-
-        return response()->json(['monthlyRevenue' => $monthlyRevenue, 'totalYearlyRevenue'=>$totalYearlyRevenue  ]);
-    }
-
-
-
-
-
-
     public function deleteBooking($id)
     {
         $booking = Booking::findOrFail($id);

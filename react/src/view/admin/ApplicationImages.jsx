@@ -37,7 +37,7 @@ export const ApplicationImages = () => {
 
   return (
     <PageComponent
-      title="Contact Details"
+      title="Application Images"
       buttons={
         <TButton color="green" to="/application-images/update">
           <PlusCircleIcon className="h-5 w-5 mr-2" />

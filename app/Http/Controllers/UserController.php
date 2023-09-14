@@ -17,7 +17,6 @@ class UserController extends Controller
         // Get all users
         $users = User::all();
 
-
         return response()->json(['users' => $users]);
     }
 

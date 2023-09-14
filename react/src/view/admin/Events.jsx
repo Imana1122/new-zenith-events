@@ -81,7 +81,7 @@ export const Events = () => {
       {/* Render events in tab format */}
       <div className='md:flex md:justify-center md:items-center'>
         {Object.keys(events).length > 0 ? (
-          <div className="block px-1 py-16 sm:px-0 w-full">
+          <div className="block px-1 sm:px-0 w-full">
             <Tab.Group>
               {/* Tab List */}
               <Tab.List className="flex justify-between rounded-xl bg-blue-900/20 p-1">
