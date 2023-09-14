@@ -8,11 +8,12 @@ import { DefaultLayoutComponent } from '../../components/pagelayouts/DefaultLayo
 import API_BASE_URL from '../../apiConfig';
 import { format } from 'date-fns';
 import {CiLocationOn, CiTimer} from 'react-icons/ci'
-import {  Grid, Typography } from '@mui/material';
+import {  Grid, Typography, useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
 import { FaCircleMinus, FaCirclePlus } from 'react-icons/fa6';
 
 const EventDetails = () => {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up('md'));
   // Get the navigate function from react-router-dom for programmatic navigation
   const navigate = useNavigate();
   // Get the dispatch function from react-redux for dispatching actions
@@ -58,7 +59,7 @@ const EventDetails = () => {
           {/* Event information */}
           <div className="md:w-[900px] flex flex-col items-start space-y-5 md:m-auto text-2xl">
             <h2 className="text-2xl md:text-5xl text-left text-purple-900">{selectedEvent?.title}</h2>
-            <p className="text-left text-3xl ">{selectedEvent?.workshop}</p>
+            <p className="text-left text-xl md:text-3xl ">{selectedEvent?.workshop}</p>
             <div className="border border-purple-900 rounded-lg p-2 w-fit">
               <p className="text-xl md:text-3xl font-semibold text-red-500">Rs.{selectedEvent?.price}</p>
             </div>
@@ -90,20 +91,27 @@ const EventDetails = () => {
             </div>
           </div>
         </div>
+
         {/* Training details */}
         <Box sx={{ py: 2 }}>
-          <hr className="border border-purple-300 w-full my-2" />
-          <Typography variant="h3" sx={{ color: 'purple', textAlign: {md:'left', sm:'center'}, mb: 2 }}>
+        <hr className="border border-purple-300 w-full my-2" />
+        <Typography
+            variant={isMdScreen ? 'h3' : 'h5'} // Use 'h3' for md and 'h5' for others
+            sx={{ color: 'purple', textAlign: { md: 'left', sm: 'center' }, mb: 2 }}
+        >
             Training Details
-          </Typography>
+        </Typography>
 
-          <hr className="border border-purple-300 w-full my-2 md:hidden" />
-          <Typography variant="body1">{selectedEvent?.description}</Typography>
+        <hr className="border border-purple-300 w-full my-2 md:hidden" />
+        <Typography variant="body1">{selectedEvent?.description}</Typography>
         </Box>
+
         {/* Trainer profile */}
         <Box sx={{ py: 2 }}>
           <hr className="border border-purple-300 w-full my-2 " />
-          <Typography variant="h3" sx={{ color: 'purple', textAlign: {md:'left', sm:'center'}, mb: 2 }}>
+          <Typography
+           variant={isMdScreen ? 'h3' : 'h5'} // Use 'h3' for md and 'h5' for others
+           sx={{ color: 'purple', textAlign: {md:'left', sm:'center'}, mb: 2 }}>
             Trainer Profile
           </Typography>
           <hr className="border-purple-300 w-full my-2 " />
@@ -120,7 +128,9 @@ const EventDetails = () => {
             )}
           </Grid>
           <Box sx={{ py: 2 }} className='hidden md:block'>
-          <Typography variant="h3" sx={{ color: 'purple', textAlign: {md:'left', sm:'center'}, mb: 2 }}>
+          <Typography
+          variant={isMdScreen ? 'h3' : 'h5'} // Use 'h3' for md and 'h5' for others
+          sx={{ color: 'purple', textAlign: {md:'left', sm:'center'}, mb: 2 }}>
             Training Host Profile
           </Typography>
           <Typography variant="body1">{selectedEvent?.eventHostDetails}</Typography>
