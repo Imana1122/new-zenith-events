@@ -93,7 +93,7 @@ export default function VerifyCode() {
             const url = `/reset-password?phoneNumber=${phoneNumber}&code=${verificationCode}`;
             navigate(url); // Use navigate instead of Navigate(url);
           } else if (status === 'signup') {
-            if (name && email && phoneNumber && password && passwordConfirmation) {
+            if (name && phoneNumber && password && passwordConfirmation) {
               signup();
             } else {
               // Handle missing fields or show an error message to the user.
@@ -119,15 +119,13 @@ export default function VerifyCode() {
     axiosClient
       .post('/signup', {
         name,
-        email,
         phoneNumber,
         password,
         password_confirmation: passwordConfirmation,
       })
       .then(({ data }) => {
-        setCurrentUser(data.user);
-        setUserToken(data.token);
         setProcessing(false);
+        navigate('/users');
       })
       .catch((error) => {
         // console.log(error);
@@ -186,7 +184,7 @@ export default function VerifyCode() {
           setProcessingResend(false);
         });
     } else if (status === 'signup') {
-      if (name && email && phoneNumber && password && passwordConfirmation) {
+      if (name && phoneNumber && password && passwordConfirmation) {
         axiosClient
           .post('/signupPhoneNumberVerification', { phoneNumber })
           .then((response) => {

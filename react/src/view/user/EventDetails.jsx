@@ -56,7 +56,7 @@ const EventDetails = () => {
             <img src={API_BASE_URL +"/storage/images/events/" +selectedEvent?.imagePath} alt={selectedEvent?.title} className="h-full w-full rounded object-cover" />
           </div>
           {/* Event information */}
-          <div className="md:w-[900px] flex flex-col items-start space-y-3 md:m-auto text-2xl">
+          <div className="md:w-[900px] flex flex-col items-start space-y-5 md:m-auto text-2xl">
             <h2 className="text-2xl md:text-5xl text-left text-purple-900">{selectedEvent?.title}</h2>
             <p className="text-left text-3xl ">{selectedEvent?.workshop}</p>
             <div className="border border-purple-900 rounded-lg p-2 w-fit">
@@ -66,7 +66,7 @@ const EventDetails = () => {
             <div className="text-left text-sm md:text-2xl w-full space-x-3 flex items-center"><CiTimer/> <p>{selectedEvent&&formattedStartDate} to {selectedEvent&& formattedEndDate}</p></div>
 
             {/* Count control */}
-            <div className="flex items-center space-x-3 mt-3">
+            <div className="flex items-center space-x-5 mt-3">
               <button onClick={handleDecrease}>
                 <FaCircleMinus className="text-4xl" />
               </button>

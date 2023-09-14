@@ -156,7 +156,7 @@ export const Events = () => {
                               <td>
                                 <ul>
                                   {event.trainers.map((trainer) => (
-                                    <Box key={trainer.id} className="text-green-500"><Typography variant="body3">{trainer.name}</Typography> </Box>
+                                    <div key={trainer.id} className="text-green-500 p-2"><Typography variant="body3">{trainer.name}</Typography> </div>
                                   ))}
                                 </ul>
                               </td>

@@ -272,7 +272,7 @@ export const UpdateContactDetails = () => {
                   <Checkbox
                     id="allow_send_message"
                     name="allow_send_message"
-                    checked={contactDetails.allow_send_message}
+                    checked={contactDetails.allow_send_message === "1" || contactDetails.allow_send_message === true}
                     onChange={toggleAllowSendMessage}
                     sx={ inputCss }
                   />

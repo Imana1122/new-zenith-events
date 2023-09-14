@@ -175,7 +175,7 @@ export default function Contact() {
               </Box>
             </Grid>
             <Grid item md={6} xs={12}>
-              {contact.allow_send_message === 1 && (
+              {contact.allow_send_message === "1" && (
                 <Box
                   p={4}
                   bgcolor="white"

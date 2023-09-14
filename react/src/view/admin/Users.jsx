@@ -64,11 +64,12 @@ export const Users = () => {
     <PageComponent
       title="Users"
       buttons={
+        currentUser.phoneNumber === superadmin&&(
         <TButton color="green" to="/signup">
           <PlusCircleIcon className="h-5 w-5 mr-2" />
           New
         </TButton>
-      }
+        )}
     >
       <div className="mt-3 text-sm">
         <table className="w-full text-gray-700 border border-collapse border-gray-200 rounded-sm">

@@ -78,7 +78,7 @@ export const ContactDetails = () => {
                 <td className="border border-gray-200 p-2">{contact.tiktok_link?(contact.tiktok_link):(<p>Not set</p>)}</td>
                 <td className="border border-gray-200 p-2">{contact.instagram_link?(contact.instagram_link):(<p>Not set</p>)}</td>
                 <td className="border border-gray-200 p-2">{contact.github_link?(contact.github_link):(<p>Not set</p>)}</td>
-                <td className="border border-gray-200 p-2">{contact.allow_send_message === 1 ?(<p className="text-green-500">Yes</p>):(<p className="text-red-500">No</p>)}</td>
+                <td className="border border-gray-200 p-2">{contact.allow_send_message === "1"?(<p className="text-green-500">Yes</p>):(<p className="text-red-500">No</p>)}</td>
 
               </tr>
               )))
