@@ -18,7 +18,7 @@ export const Sidebar = ({ logout, handleSidebarToggle }) => {
 
       <div className='flex items-center gap-2 px-2 py-3'>
 
-        <span className='text-neutral-100 text-lg'><ApplicationLogo/> </span>
+        <span className='text-neutral-100 text-lg'><ApplicationLogo className='w-full h-full'/> </span>
       </div>
       <div className='flex-1 flex flex-col overflow-auto'>
         <div className='flex-1 py-8 flex flex-col gap-0.5 overflow-auto '>

@@ -10,10 +10,13 @@ import {
   ListItemText,
   Button,
   Link as MuiLink,
+  ListItemAvatar,
+  Avatar,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
-import ZenithEventsLogo from '../assets/zenitheventslogo.svg';
+import { ApplicationLogo } from './core/ApplicationLogo';
+import { AiOutlineLogin } from 'react-icons/ai';
 
 export const Header = ({ navigation }) => {
   const location = useLocation();
@@ -29,11 +32,7 @@ export const Header = ({ navigation }) => {
         <Toolbar>
 
           <Link to="/">
-            <img
-              className="flex-shrink-0 md:w-50 w-20"
-              src={ZenithEventsLogo}
-              alt="ZenithEvents"
-            />
+            <ApplicationLogo className="flex-shrink-0 md:w-50 w-20"/>
           </Link>
           <div style={{ flexGrow: 1 }} />
           <div className="hidden md:flex md:items-center md:justify-between w-2/3">
@@ -77,16 +76,21 @@ export const Header = ({ navigation }) => {
         onClose={toggleMobileMenu}
         variant="temporary"
       >
-        <List>
+        <List component="nav">
           {navigation.map((item) => (
             <ListItem
-
+              color={location.pathname === item.to ? 'primary' : 'inherit'}
               key={item.name}
               component={Link}
               to={item.to}
               onClick={toggleMobileMenu}
             >
-              <ListItemText primary={item.name} />
+              <Button
+                color={location.pathname === item.to ? 'primary' : 'inherit'}
+                variant="text"
+              >
+                {item.name}
+              </Button>
             </ListItem>
           ))}
           <ListItem
@@ -95,7 +99,14 @@ export const Header = ({ navigation }) => {
             href="/login"
             onClick={toggleMobileMenu}
           >
+            <Button variant='contained'>
+            <ListItemAvatar>
+                <Avatar>
+                    <AiOutlineLogin/>
+                </Avatar>
+            </ListItemAvatar>
             <ListItemText primary="Login" />
+            </Button>
           </ListItem>
         </List>
       </Drawer>

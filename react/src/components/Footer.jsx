@@ -1,5 +1,5 @@
 import React from 'react';
-import ZenithEventsLogo from '../assets/zenitheventslogo.svg';
+import { ApplicationLogo } from './core/ApplicationLogo';
 
 const Footer = () => {
   return (
@@ -10,8 +10,8 @@ const Footer = () => {
           <div className="container mx-auto px-4">
             <div className="flex justify-center space-x-20 items-center">
               {/* Logo column */}
-              <div className="flex items-center">
-                <img src={ZenithEventsLogo} alt="Logo" className="h-[250px] w-[250px]" />
+              <div className="flex items-center ">
+                <ApplicationLogo className="h-[250px] w-[250px]"/>
               </div>
 
               {/* Policies column */}
@@ -63,8 +63,8 @@ const Footer = () => {
           <div className="container mx-auto px-5 flex justify-between items-center flex-col">
 
             {/* Logo column */}
-            <div>
-              <img src={ZenithEventsLogo} alt="Logo" className="h-[100px] w-[100px]" />
+            <div  >
+              <ApplicationLogo className="h-[100px] w-[100px]"/>
             </div>
 
             <div className='flex justify-between items-center space-x-5'>
