@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../axios';
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell, Label } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
 
 const BuyerProfileChart = () => {
   const [orderedEvents, setOrderedEvents] = useState([]);
@@ -11,12 +11,17 @@ const BuyerProfileChart = () => {
       .get('/getMostBookedEvents') // Replace with the correct API endpoint
       .then((response) => {
         setOrderedEvents(response.data.orderedEvents);
+
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
+  const convertedEvents = orderedEvents.map(event => ({
+    eventId: event.eventId,
+    booking_count: parseInt(event.booking_count, 10) // Use parseInt to convert to an integer
+  }));
 
 
   return (
@@ -29,32 +34,23 @@ const BuyerProfileChart = () => {
         <div className='w-full mt-3 flex-1 text-xs'>
           <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Pie
-                data={orderedEvents}
+              <Pie
+                data={convertedEvents}
                 dataKey="booking_count"
                 nameKey="eventId"
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
                 fill="#8884d8"
-                label="Event Id"
-            >
-                {orderedEvents.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={getColor(index)} />
+                label
+              >
+                {convertedEvents.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getColor(index)} />
                 ))}
-                {orderedEvents.map((entry, index) => (
-                <Label
-                    key={`label-${index}`}
-                    position="insideBottom"
-                    fill="white" // Label text color
-                    fontSize={12} // Label text size
-                    value={entry.eventId} // Custom label for nameKey
-                />
-                ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
 
           </ResponsiveContainer>
         </div>
