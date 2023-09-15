@@ -20,7 +20,7 @@ const EventCard = ({ event, handleClick }) => {
             <img
               src={API_BASE_URL + '/storage/images/events/' + event.imagePath}
               alt={event.title}
-              className="rounded w-full h-[250px]"
+              className="rounded w-full md:h-[250px]"
             />
             <div className="absolute bottom-0 left-4 right-4 bg-purple-900 text-white px-2 py-1 rounded-t-full text-center md:hidden">
             <Typography variant="body2">Rs.{event.price}</Typography>

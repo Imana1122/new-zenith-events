@@ -16,12 +16,12 @@ const TrainerCard = ({ trainer }) => {
         />
       </Box>
       <Box sx={{ width: '50%' }}>
-        <Typography variant={isMdScreen ? 'h6' : 'subtitle1'} sx={{ color: 'purple.900', fontWeight: 'semibold', mb: 1 }}>
+        <Typography variant={isMdScreen ? 'h6' : 'subtitle1'} sx={{ color: 'purple.900', fontWeight: 800, mb: 1 }}>
           {trainer.name}
         </Typography>
-        <Typography  variant={isMdScreen ? 'subtitle1' : 'subtitle5'}>{trainer.post}</Typography>
-        <Typography variant="body2">{trainer.skillLevel}</Typography>
-        <Typography variant="body2">{trainer.experienceYears} years of experience</Typography>
+        <Typography  variant={isMdScreen ? 'subtitle1' : 'subtitle1'} sx={{ fontWeight: 600 }}>{trainer.post}</Typography>
+        <Typography variant="body2" >{trainer.skillLevel}</Typography>
+        <Typography variant="body2" sx={{ color: 'blue' }}>{trainer.experienceYears} years of experience</Typography>
         <div>
     </div>
       </Box>

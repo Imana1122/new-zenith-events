@@ -18,7 +18,7 @@ const RecentBookings = () => {
     const [bookingIdToDelete, setBookingIdToDelete] = useState(null);
 
     const [bookings, setBookings] = useState({});
-    useEffect(() => {
+    const search = () => {
         if (searchQuery) {
         axiosClient.get('/search/bookings',{ params: { query: searchQuery } })
             .then((response) => {
@@ -37,7 +37,11 @@ const RecentBookings = () => {
             console.error(error);
         });
         }
-    }, [searchQuery]);
+    }
+
+    useEffect(()=>{
+        search();
+    },[searchQuery]);
 
     const handleDelete = (id) => {
         axiosClient
@@ -45,6 +49,8 @@ const RecentBookings = () => {
           .then(() => {
             search();
             setIsModalOpen(false);
+            toast.success(response.data.message);
+            search();
           })
           .catch((error) => {
             setIsModalOpen(false);

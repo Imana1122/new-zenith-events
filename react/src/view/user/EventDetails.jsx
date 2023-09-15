@@ -67,7 +67,7 @@ const EventDetails = () => {
             <div className="text-left text-sm md:text-xl w-full space-x-3 flex items-center"><CiTimer/> <p>{selectedEvent&&formattedStartDate} to {selectedEvent&& formattedEndDate}</p></div>
 
             {/* Count control */}
-            <div className="flex items-center space-x-5 mt-3">
+            <div className="flex items-center md:space-x-5 mt-3 space-x-3">
               <button onClick={handleDecrease}>
                 <FaCircleMinus className="text-4xl" />
               </button>
@@ -116,10 +116,10 @@ const EventDetails = () => {
           </Typography>
           <hr className="border-purple-300 w-full my-2 " />
           {/* Display trainers and their details */}
-          <Grid container spacing={2} justifyContent="center">
+          <Grid container spacing={2} justifyContent="start">
             {selectedEvent?.trainers ? (
               selectedEvent.trainers.map((trainer) => (
-                <Grid key={trainer.id} item xs={12} sm={6} md={5}>
+                <Grid key={trainer.id} item xs={12} sm={6} md={6}>
                   <TrainerCard trainer={trainer} />
                 </Grid>
               ))
