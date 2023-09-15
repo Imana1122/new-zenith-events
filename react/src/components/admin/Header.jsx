@@ -1,14 +1,15 @@
 import { Menu, Popover, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
-import { HiOutlineBell, HiOutlineChatAlt, HiOutlineSearch } from 'react-icons/hi';
+import { HiOutlineBell, HiOutlineChatAlt } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { useStateContext } from '../../contents/ContextProvider';
-import { TfiLayoutGrid3Alt } from 'react-icons/tfi';
+import { TfiMenuAlt } from 'react-icons/tfi';
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from '@mui/material';
 import { inputCss } from '../css-components/text-field';
+import {BiUserCircle} from 'react-icons/bi';
 
 
 export const Header = ({ logout, currentUser,onSidebarToggle }) => {
@@ -28,7 +29,7 @@ export const Header = ({ logout, currentUser,onSidebarToggle }) => {
           onClick={onSidebarToggle}
           className="text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800"
         >
-          <TfiLayoutGrid3Alt className="w-[3rem] h-[3rem]" />
+          <TfiMenuAlt className="w-[3rem] h-[3rem]" />
         </button>
         {/* Search Input */}
         <div>
@@ -127,13 +128,9 @@ export const Header = ({ logout, currentUser,onSidebarToggle }) => {
         {/* User Menu */}
         <Menu as='div' className='relative inline-block text-left'>
           <div>
-            <Menu.Button className='ml-2 inline-flex rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400'>
-              <span className='sr-only'>Oven user menu</span>
-              <div
-                className='h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center'
-                style={{ backgroundImage: 'url("https://source.unsplash.com/80x80?face")' }}
-              >
-                <span className='sr-only'>Hugh Jackson</span>
+            <Menu.Button className='ml-2 inline-flex rounded-full focus:outline-none'>
+              <div>
+                <BiUserCircle className='h-10 w-10'/>
               </div>
             </Menu.Button>
           </div>

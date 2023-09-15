@@ -20,7 +20,7 @@ const EventCard = ({ event, handleClick }) => {
             <img
               src={API_BASE_URL + '/storage/images/events/' + event.imagePath}
               alt={event.title}
-              className="rounded w-[350px] h-[300px]"
+              className="rounded w-full h-[250px]"
             />
             <div className="absolute bottom-0 left-4 right-4 bg-purple-900 text-white px-2 py-1 rounded-t-full text-center md:hidden">
             <Typography variant="body2">Rs.{event.price}</Typography>
@@ -30,15 +30,15 @@ const EventCard = ({ event, handleClick }) => {
           </Box>
 
           <Box sx={{ mt: 2 }} textAlign="left">
-            <Typography variant="h5" className="text-purple-900">
+            <Typography variant="h6" className="text-purple-900">
               {event.title}
             </Typography>
 
             <Box sx={{ mt: 1 }} display='block'>
-              <Typography variant="body1" className="text-gray-600 flex items-center" mb={1}>
+              <Typography variant="body2" className="text-gray-600 flex items-center" mb={1}>
                 <CiTimer className='mr-3'/> {formattedStartDate} to {formattedEndDate}
               </Typography>
-              <Typography variant="body1" className="text-gray-600 flex items-center" mb={1}>
+              <Typography variant="body2" className="text-gray-600 flex items-center" mb={1}>
                 <CiLocationOn className='mr-3'/> {event.address}
               </Typography>
             </Box>

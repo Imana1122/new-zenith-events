@@ -8,6 +8,7 @@ import TButton from '../../components/core/TButton';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { inputCss } from '../../components/css-components/text-field';
 
 function Login() {
   // State variables
@@ -95,6 +96,7 @@ function Login() {
               fullWidth // Use full width
               error={!!errors.phoneNumber} // Check if there are errors
               helperText={errors.phoneNumber ? errors.phoneNumber[0] : ''} // Display error message
+              sx={inputCss}
             />
           </div>
           {/**Phone Number */}
@@ -114,6 +116,7 @@ function Login() {
               fullWidth // Use full width
               error={!!errors.password} // Check if there are errors
               helperText={errors.password ? errors.password[0] : ''} // Display error message
+              sx={inputCss}
             />
           </div>
           {/**Password */}

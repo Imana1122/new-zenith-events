@@ -12,14 +12,14 @@ const TrainerCard = ({ trainer }) => {
         <img
           src={API_BASE_URL + '/storage/images/trainers/' + trainer.imagePath}
           alt={trainer.name}
-          style={{ width: '200px', height: '180px', borderRadius: 'lg' }}
+          style={{ width: 'full' , height: '150px', borderRadius: 'lg' }}
         />
       </Box>
       <Box sx={{ width: '50%' }}>
-        <Typography variant="h6" sx={{ color: 'purple.900', fontWeight: 'bold', mb: 1 }}>
+        <Typography variant={isMdScreen ? 'h6' : 'subtitle1'} sx={{ color: 'purple.900', fontWeight: 'semibold', mb: 1 }}>
           {trainer.name}
         </Typography>
-        <Typography  variant={isMdScreen ? 'subtitle1' : 'subtitle3'}>{trainer.post}</Typography>
+        <Typography  variant={isMdScreen ? 'subtitle1' : 'subtitle5'}>{trainer.post}</Typography>
         <Typography variant="body2">{trainer.skillLevel}</Typography>
         <Typography variant="body2">{trainer.experienceYears} years of experience</Typography>
         <div>

@@ -10,6 +10,7 @@ import EventFeature from '../../components/home/EventFeature';
 import axiosClient from '../../axios';
 import { DefaultLayoutComponent } from '../../components/pagelayouts/DefaultLayoutComponent';
 import API_BASE_URL from '../../apiConfig';
+import { Grid } from '@mui/material';
 
 function Home() {
   // Get the events state from the Redux store or set it to an empty array if not available
@@ -90,16 +91,20 @@ function Home() {
         </div>
         <HeroSection />
       </div>
-      <div className="grid md:flex md:flex-row md:space-x-10 justify-center items-inline flex-wrap xl:px-30">
+
+      <Grid container spacing={2} justifyContent="center" >
         {/* Render event cards if eventsState contains data, otherwise show loading message */}
         {eventsState.length > 0 ? (
           limitedEvents.map((event) => (
-            <EventCard key={event.id} event={event} handleClick={handleClick} />
+            <Grid key={event.id} item xs={12} sm={6} md={4} >
+                <EventCard key={event.id} event={event} handleClick={handleClick} />
+            </Grid>
+
           ))
         ) : (
           <p className="text-xl my-5 text-red-700 font-light">No Events right now</p>
         )}
-      </div>
+      </Grid>
       <div className="hidden md:grid">
         <BookEventsSection />
         <EventFeature />

@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import { Transition } from '@headlessui/react';
 import { FaCheckCircle } from "react-icons/fa";
 import { BiSolidErrorCircle } from "react-icons/bi";
+import { inputCss } from '../../components/css-components/text-field';
 
 export default function VerifyCode() {
   // Get the query parameters from the URL
@@ -278,6 +279,7 @@ export default function VerifyCode() {
             onChange={(e) => setVerificationCode(e.target.value)}
             error={!!errors.verificationCode}
             helperText={errors.verificationCode}
+            sx={inputCss}
           />
         </div>
 

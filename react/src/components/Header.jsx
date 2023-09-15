@@ -3,20 +3,16 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
   Drawer,
   List,
   ListItem,
   ListItemText,
   Button,
   Link as MuiLink,
-  ListItemAvatar,
-  Avatar,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import { ApplicationLogo } from './core/ApplicationLogo';
-import { AiOutlineLogin } from 'react-icons/ai';
 
 export const Header = ({ navigation }) => {
   const location = useLocation();
@@ -95,17 +91,13 @@ export const Header = ({ navigation }) => {
           ))}
           <ListItem
             variant="contained"
-            component={MuiLink}
-            href="/login"
+            component={Link}
             onClick={toggleMobileMenu}
+            to='/login'
           >
             <Button variant='contained'>
-            <ListItemAvatar>
-                <Avatar>
-                    <AiOutlineLogin/>
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Login" />
+            <ListItemText primary="Login" className='mr-2'/>
+
             </Button>
           </ListItem>
         </List>

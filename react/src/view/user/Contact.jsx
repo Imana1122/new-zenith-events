@@ -56,15 +56,10 @@ export default function Contact() {
       });
   }, []);
 
-  const [isHovered, setIsHovered] = useState(false);
+  const submit=(e)=>{
+    e.preventDefault();
+  }
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   return (
     <DefaultLayoutComponent>
@@ -183,7 +178,7 @@ export default function Contact() {
                   boxShadow="md"
                   mt={6}
                 >
-                  <form>
+                  <form onSubmit={submit}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <TextField
